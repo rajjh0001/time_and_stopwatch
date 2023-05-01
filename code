@@ -1,0 +1,81 @@
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+using namespace std;
+using namespace chrono;
+
+// Timer class
+class Timer {
+private:
+    high_resolution_clock::time_point startTime;
+public:
+    void start() {
+        startTime = high_resolution_clock::now();
+    }
+
+    double elapsed() {
+        high_resolution_clock::time_point endTime = high_resolution_clock::now();
+        duration<double> timeSpan = duration_cast<duration<double>>(endTime - startTime);
+        return timeSpan.count();
+    }
+};
+
+// Stopwatch class
+class Stopwatch {
+private:
+    bool running;
+    high_resolution_clock::time_point startTime;
+    high_resolution_clock::time_point stopTime;
+public:
+    Stopwatch() : running(false) {}
+
+    void start() {
+        if (!running) {
+            startTime = high_resolution_clock::now();
+            running = true;
+        }
+    }
+
+    void stop() {
+        if (running) {
+            stopTime = high_resolution_clock::now();
+            running = false;
+        }
+    }
+
+    double elapsed() {
+        if (running) {
+            high_resolution_clock::time_point now = high_resolution_clock::now();
+            duration<double> timeSpan = duration_cast<duration<double>>(now - startTime);
+            return timeSpan.count();
+        } else {
+            duration<double> timeSpan = duration_cast<duration<double>>(stopTime - startTime);
+            return timeSpan.count();
+        }
+    }
+
+    void reset() {
+        running = false;
+    }
+};
+
+// Example usage
+int main() {
+    // Timer example
+    Timer timer;
+    timer.start();
+    this_thread::sleep_for(seconds(2));
+    double elapsed = timer.elapsed();
+    cout << "Timer elapsed time: " << elapsed << " seconds" << endl;
+
+    // Stopwatch example
+    Stopwatch stopwatch;
+    stopwatch.start();
+    this_thread::sleep_for(seconds(1));
+    stopwatch.stop();
+    elapsed = stopwatch.elapsed();
+    cout << "Stopwatch elapsed time: " << elapsed << " seconds" << endl;
+
+    return 0;
+}
