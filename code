@@ -5,7 +5,7 @@
 using namespace std;
 using namespace chrono;
 
-// Timer class
+
 class Timer {
 private:
     high_resolution_clock::time_point startTime;
@@ -21,7 +21,7 @@ public:
     }
 };
 
-// Stopwatch class
+
 class Stopwatch {
 private:
     bool running;
@@ -60,7 +60,7 @@ public:
     }
 };
 
-// Example usage
+
 int main() {
     // Timer example
     Timer timer;
@@ -69,7 +69,7 @@ int main() {
     double elapsed = timer.elapsed();
     cout << "Timer elapsed time: " << elapsed << " seconds" << endl;
 
-    // Stopwatch example
+  
     Stopwatch stopwatch;
     stopwatch.start();
     this_thread::sleep_for(seconds(1));
